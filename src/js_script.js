@@ -35,15 +35,37 @@ main.onclick = function(e) {
         listContainer.className = "list-container";
 
         tasks.map((elem)=> {
+            createTask(listContainer,elem);
+        })
+
+        return listContainer;
+
+    }
+
+    function createTask(listContainer,elem) {
             let list = document.createElement("div");
             let h2 = document.createElement("h2");
             h2.innerText = elem.date;
             listContainer.appendChild(list);
             list.appendChild(h2);
-        })
 
-        return listContainer;
-
+            Object.keys(elem).map((key)=>{
+                if(key != "date") {
+                    let div = document.createElement("div");
+                    div.className = "taskDiv";
+                    let input = document.createElement("input");
+                    input.className = "taskTime";
+                    input.value = key;
+                    let input2 = document.createElement("input");
+                    input2.className = "taskText";
+                    input2.value = elem[key];
+                    div.appendChild(input);
+                    div.appendChild(input2);
+                    list.appendChild(div);
+                }
+            })
+            
+            
     }
 
     function updateListContainer() {
