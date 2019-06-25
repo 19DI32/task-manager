@@ -1,0 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 10% auto;
+}
+.container input {
+    border: 1px solid gray;
+    padding: 6px 8px;
+    width: 200px;
+    margin: 5px auto;
+}
+.container div {
+    width: min-content;
+}
+.container button {
+    display: block;
+    width: 200px;
+    border: none;
+    background: green;
+    padding: 8px 10px;
+}
+.container button:hover {
+    background: lightgreen;
+    color: white;
+    cursor: pointer;
+}
