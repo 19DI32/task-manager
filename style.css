@@ -28,3 +28,11 @@
     color: white;
     cursor: pointer;
 }
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.list-container div {
+    width: 300px;
+    margin: 10px 30px;
+}
