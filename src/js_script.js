@@ -23,19 +23,58 @@ main.onclick = function(e) {
         }
         //
         if(checkTasks) {
-        task.date = date;
-        task[time] = text;
-        //task.text = text;
-        tasks.push(task);
-    }
+           task.date = date;
+           task[time] = text;
+           //task.text = text;
+           tasks.push(task);
+        }
         
         let listContainer =  createTaskList(tasks);
         main.appendChild(listContainer);
     }
 
+    else if (target.className == "btn-reduct") {
+        let input = main.querySelector(".taskTime");
+        input.disabled =false;
+        let input2 = main.querySelector(".taskText");
+        input2.disabled =false;
+    }
+    else if (target.className == "btn-remove") {
+        console.log(target.parentNode);
+         updateTasks(target.parentNode);
+         target.parentNode.remove();
+         let list = main.querySelectorAll(".task-container");
+         for(let i = 0;i<list.length;i++) {
+             console.log(list[i]);
+             let checkList = list[i].querySelectorAll(".taskDiv");
+             console.log(checkList);
+             if(checkList.length == 0) {
+                 list[i].remove();
+             }
+         }
+    }
 
 
 
+    function updateTasks(elem) {
+        //console.log(elem.parentNode);
+        for(let i = 0; i< tasks.length;i++) {
+           // console.log(elem.parentNode.querySelector("h2").innerHTML);
+            if(tasks[i].date == elem.parentNode.querySelector("h2").innerHTML) {
+            //    console.log(tasks[i]);
+                let check = elem.querySelector(".taskTime").value;
+              //  console.log(check);
+                for(let key in tasks[i]) {
+            //        console.log(key);
+                    if(key == check) {
+                   //     console.log("works");
+                        delete tasks[i][key];
+                    }
+                }
+              //  console.log(tasks)
+            }
+        }
+    }
 
     function createTaskList(tasks) {
         updateListContainer();
@@ -53,6 +92,7 @@ main.onclick = function(e) {
 
     function createTask(listContainer,elem) {
             let list = document.createElement("div");
+            list.className = "task-container";
             let h2 = document.createElement("h2");
             h2.innerText = elem.date;
             listContainer.appendChild(list);
@@ -73,9 +113,11 @@ main.onclick = function(e) {
         let input = document.createElement("input");
         input.className = "taskTime";
         input.value = key;
+        input.disabled = true;
         let input2 = document.createElement("input");
         input2.className = "taskText";
         input2.value = elem[key];
+        input2.disabled = true;
         let btn = document.createElement("button");
         btn.className = "btn-reduct";
         btn.innerHTML = "Reduct";
