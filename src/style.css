@@ -22,17 +22,37 @@
     border: none;
     background: green;
     padding: 8px 10px;
+
 }
 .container button:hover {
     background: lightgreen;
-    color: white;
+    color: red;
     cursor: pointer;
 }
 .list-container {
     display: flex;
     flex-wrap: wrap;
 }
+.list-container h2 {
+    text-align: center;
+    background: lightgray;
+    margin: 0px;
+    padding: 0;
+    width: 100%;
+}
 .list-container div {
     width: 300px;
-    margin: 10px 30px;
+
+}
+.taskDiv {
+    display: flex;
+}
+.taskDiv button {
+    width:40px;
+}
+.taskTime {
+    width: 70px;
+}
+.taskText {
+    width: 150px;
 }
