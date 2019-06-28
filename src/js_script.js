@@ -11,6 +11,12 @@ main.onclick = function(e) {
         let date = main.querySelector(".input_date").value;
         let time = main.querySelector(".input_time").value;
         let text = main.querySelector(".input_text").value;
+        if(!validateDate(date)){
+            return false;
+        };
+        if(!validateTime(time)){
+            return false;
+        }
 
         // check data
         let checkTasks = true;
@@ -40,18 +46,46 @@ main.onclick = function(e) {
         input2.disabled =false;
     }
     else if (target.className == "btn-remove") {
-        console.log(target.parentNode);
+        //console.log(target.parentNode);
          updateTasks(target.parentNode);
-         target.parentNode.remove();
-         let list = main.querySelectorAll(".task-container");
-         for(let i = 0;i<list.length;i++) {
-             console.log(list[i]);
-             let checkList = list[i].querySelectorAll(".taskDiv");
-             console.log(checkList);
-             if(checkList.length == 0) {
-                 list[i].remove();
-             }
-         }
+         updateDOMList(target);        
+    }
+
+    function updateDOMList(target) {
+        target.parentNode.remove();
+        let list = main.querySelectorAll(".task-container");
+        for(let i = 0;i<list.length;i++) {
+            console.log(list[i]);
+            let checkList = list[i].querySelectorAll(".taskDiv");
+            console.log(checkList);
+            if(checkList.length == 0) {
+                list[i].remove();
+            }
+        }
+
+    }
+
+
+    function validateTime(time) {
+        //var date = document.getElementById("date").value;
+        let pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+        if (pattern.test(time)) {
+            return true
+        } else {
+            alert("Invalide date: dat should be in HH:MM:SS format!");
+        }
+        return false;
+    }
+    function validateDate(date) {
+        let arrD = date.split(".");
+        arrD[1] -= 1;
+        let d = new Date(arrD[2], arrD[1], arrD[0]);
+        if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
+        return true;
+        } else {
+            alert("Введена некорректная дата!");
+            return false;
+        }
     }
 
 
@@ -69,6 +103,13 @@ main.onclick = function(e) {
                     if(key == check) {
                    //     console.log("works");
                         delete tasks[i][key];
+                        for(let i =0;i<tasks.length;i++) {
+                            console.log(tasks[i]);
+                            if(Object.keys(tasks[i]).length>=1) {
+                                tasks.splice(i,1);
+                                i--;
+                            }
+                        }
                     }
                 }
               //  console.log(tasks)
@@ -120,10 +161,10 @@ main.onclick = function(e) {
         input2.disabled = true;
         let btn = document.createElement("button");
         btn.className = "btn-reduct";
-        btn.innerHTML = "Reduct";
+        btn.innerHTML = "<i class='fa fa-edit'></i>Edit";
         let btn2 = document.createElement("button");
         btn2.className = "btn-remove";
-        btn2.innerHTML = "Remove";
+        btn2.innerHTML = "<i class='fa fa-trash'></i>Delete";
         div.appendChild(input);
         div.appendChild(input2);
         div.appendChild(btn);
