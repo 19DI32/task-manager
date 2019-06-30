@@ -4,7 +4,6 @@ let main = document.getElementById("main");
 
 main.onclick = function(e) {
     let target = e.target;
-   // console.log(target.id);
 
     if(target.id === "confirm") {
         let task = {};
@@ -18,20 +17,24 @@ main.onclick = function(e) {
             return false;
         }
 
-        // check data
         let checkTasks = true;
         console.log(tasks);
         for(let i = 0;i<tasks.length;i++) {
             if(tasks[i].date == date) {
+                let keys = Object.keys(tasks[i]);
+                for(let i = 0;i<keys.length;i++) {
+                    if(keys[i] == time) {
+                        alert("The time is already set, you can edit it");
+                        return false;
+                    }
+                }
                 tasks[i][time] = text;
                 checkTasks = false;
             }
         }
-        //
         if(checkTasks) {
            task.date = date;
            task[time] = text;
-           //task.text = text;
            tasks.push(task);
         }
         
@@ -46,7 +49,6 @@ main.onclick = function(e) {
         input2.disabled =false;
     }
     else if (target.className == "btn-remove") {
-        //console.log(target.parentNode);
          updateTasks(target.parentNode);
          updateDOMList(target);        
     }
@@ -67,12 +69,11 @@ main.onclick = function(e) {
 
 
     function validateTime(time) {
-        //var date = document.getElementById("date").value;
-        let pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+        let pattern = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
         if (pattern.test(time)) {
             return true
         } else {
-            alert("Invalide date: dat should be in HH:MM:SS format!");
+            alert("Invalide date: dat should be in HH:MM format!");
         }
         return false;
     }
@@ -91,17 +92,11 @@ main.onclick = function(e) {
 
 
     function updateTasks(elem) {
-        //console.log(elem.parentNode);
         for(let i = 0; i< tasks.length;i++) {
-           // console.log(elem.parentNode.querySelector("h2").innerHTML);
             if(tasks[i].date == elem.parentNode.querySelector("h2").innerHTML) {
-            //    console.log(tasks[i]);
                 let check = elem.querySelector(".taskTime").value;
-              //  console.log(check);
                 for(let key in tasks[i]) {
-            //        console.log(key);
                     if(key == check) {
-                   //     console.log("works");
                         delete tasks[i][key];
                         for(let i =0;i<tasks.length;i++) {
                             console.log(tasks[i]);
@@ -112,14 +107,14 @@ main.onclick = function(e) {
                         }
                     }
                 }
-              //  console.log(tasks)
+              
             }
         }
     }
 
     function createTaskList(tasks) {
         updateListContainer();
-        //console.log(tasks);
+        
         let listContainer = document.createElement("div");
         listContainer.className = "list-container";
 
@@ -138,7 +133,7 @@ main.onclick = function(e) {
             h2.innerText = elem.date;
             listContainer.appendChild(list);
             list.appendChild(h2);
-            console.log(elem);
+            
 
             Object.keys(elem).map((key)=>{
                 if(key != "date") {
@@ -180,5 +175,5 @@ main.onclick = function(e) {
     }
 
 }
-//console.log(createTaskList);
+
 
